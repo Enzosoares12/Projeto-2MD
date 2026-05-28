@@ -1,291 +1,397 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Nike Elite Club Collection</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500&family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="style.css"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nike Windrunner Collection | PSG · Arsenal · Real Madrid</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Google Fonts: Bebas Neue + DM Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,600;1,300&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
+
+  <!-- GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/SplitText.min.js"></script>
 </head>
 <body>
 
-<!-- LOADING SCREEN -->
-<div id="loader">
-  <div class="loader-inner">
-    <svg class="loader-swoosh" viewBox="0 0 200 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0 60 Q50 0 200 20 Q120 40 60 55 Z" fill="white"/>
-    </svg>
-    <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
-    <div class="loader-label">LOADING EXPERIENCE</div>
-  </div>
-</div>
-
-<!-- CUSTOM CURSOR -->
-<div id="cursor-dot"></div>
-<div id="cursor-ring"></div>
-
-<!-- GRAIN OVERLAY -->
-<div id="grain"></div>
-
-<!-- NAV -->
-<nav id="nav">
-  <div class="nav-logo">
-    <svg viewBox="0 0 200 80" fill="none" xmlns="http://www.w3.org/2000/svg" width="52">
-      <path d="M0 60 Q50 0 200 20 Q120 40 60 55 Z" fill="white"/>
-    </svg>
-  </div>
-  <div class="nav-links">
-    <a href="#real-madrid" class="nav-link">Madrid</a>
-    <a href="#psg" class="nav-link">PSG</a>
-    <a href="#bayern" class="nav-link">Bayern</a>
-  </div>
-  <div class="nav-cta">SHOP NOW</div>
-</nav>
-
-<!-- HERO -->
-<section id="hero">
-  <canvas id="hero-canvas"></canvas>
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <div class="hero-eyebrow" data-reveal>2025 / 26 SEASON</div>
-    <h1 class="hero-title" data-reveal>
-      <span class="title-line">NIKE</span>
-      <span class="title-line accent">ELITE</span>
-      <span class="title-line">CLUB</span>
-      <span class="title-line thin">COLLECTION</span>
-    </h1>
-    <p class="hero-sub" data-reveal>Engineered for champions.</p>
-    <button class="hero-cta" data-reveal>
-      <span>Explore Collection</span>
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>
-  </div>
-  <div class="hero-scroll-indicator">
-    <div class="scroll-line"></div>
-    <span>SCROLL</span>
-  </div>
-  <div class="hero-ambient-left"></div>
-  <div class="hero-ambient-right"></div>
-</section>
-
-<!-- INTRO STATEMENT -->
-<section id="intro-statement">
-  <div class="statement-wrap">
-    <p class="statement-text" id="split-statement">
-      Three clubs. Three identities. One standard of excellence.
-    </p>
-  </div>
-</section>
-
-<!-- REAL MADRID -->
-<section id="real-madrid" class="club-section" data-club="madrid">
-  <div class="club-ambient madrid-ambient"></div>
-  <div class="club-particles" id="madrid-particles"></div>
-  <div class="club-layout">
-    <div class="club-info">
-      <div class="club-number">01</div>
-      <div class="club-badge-area">
-        <div class="club-badge madrid-badge">
-          <span>RM</span>
-        </div>
-        <div class="badge-glow madrid-glow"></div>
-      </div>
-      <h2 class="club-name" data-split>REAL<br>MADRID</h2>
-      <div class="club-tagline">Hala Madrid — Legacy Edition</div>
-      <p class="club-desc">Pure white. Refined gold. A jacket that carries the weight of 14 European crowns. Woven from the fabric of greatness.</p>
-      <div class="product-specs">
-        <div class="spec-item"><span class="spec-label">Material</span><span class="spec-val">Aeroshield Pro</span></div>
-        <div class="spec-item"><span class="spec-label">Weight</span><span class="spec-val">180g</span></div>
-        <div class="spec-item"><span class="spec-label">Tech</span><span class="spec-val">Dri-FIT ADV</span></div>
-      </div>
-      <button class="club-cta madrid-cta">
-        <span>VIEW JACKET</span>
-        <div class="cta-line"></div>
-      </button>
+  <!-- ═══════════════════════════════════════ PRELOADER ═══════════════════════════════════════ -->
+  <div id="preloader">
+    <div class="preloader-inner">
+      <svg class="nike-swoosh" viewBox="0 0 200 70" xmlns="http://www.w3.org/2000/svg">
+        <path d="M190 10 L30 60 Q10 67 5 55 Q0 43 20 35 L100 5 Z" fill="white"/>
+      </svg>
+      <div class="preloader-bar"><div class="preloader-fill" id="preloaderFill"></div></div>
+      <span class="preloader-text" id="preloaderText">0%</span>
     </div>
-    <div class="club-product-wrap">
-      <div class="product-stage madrid-stage">
-        <div class="jacket-visual madrid-jacket" id="madrid-jacket">
-          <div class="jacket-body">
-            <div class="jacket-collar"></div>
-            <div class="jacket-chest">
-              <div class="club-logo-on-jacket madrid-logo-jacket">
-                <svg viewBox="0 0 200 80" fill="none" width="28"><path d="M0 60 Q50 0 200 20 Q120 40 60 55 Z" fill="rgba(255,255,255,0.9)"/></svg>
+  </div>
+
+  <!-- ═══════════════════════════════════════ SCROLL PROGRESS BAR ═══════════════════════════ -->
+  <div id="scrollProgress"><div id="scrollProgressFill"></div></div>
+
+  <!-- ═══════════════════════════════════════ CURSOR ═══════════════════════════════════════ -->
+  <div id="cursor"><div id="cursorDot"></div></div>
+
+  <!-- ═══════════════════════════════════════ NAV ═══════════════════════════════════════════ -->
+  <nav id="mainNav">
+    <div class="nav-logo">
+      <svg viewBox="0 0 200 70" xmlns="http://www.w3.org/2000/svg" class="nav-swoosh">
+        <path d="M190 10 L30 60 Q10 67 5 55 Q0 43 20 35 L100 5 Z" fill="white"/>
+      </svg>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#psg">PSG</a></li>
+      <li><a href="#arsenal">Arsenal</a></li>
+      <li><a href="#realmadrid">Real Madrid</a></li>
+      <li><a href="#choose" class="nav-cta">Shop</a></li>
+    </ul>
+  </nav>
+
+  <!-- ═══════════════════════════════════════ PARTICLES CANVAS ═══════════════════════════════ -->
+  <canvas id="particlesCanvas"></canvas>
+
+  <!-- ══════════════════════════════════════ HERO SECTION ════════════════════════════════════ -->
+  <section id="hero">
+    <div class="hero-content">
+      <div class="hero-overline">
+        <span class="hero-season">2025 COLLECTION</span>
+        <span class="hero-divider">·</span>
+        <span class="hero-season">LIMITED EDITION</span>
+      </div>
+      <h1 class="hero-title" id="heroTitle">
+        <span class="title-line" data-text="NIKE">NIKE</span>
+        <span class="title-line accent" data-text="WINDRUNNER">WINDRUNNER</span>
+      </h1>
+      <p class="hero-subtitle" id="heroSubtitle">
+        <span>PSG</span>
+        <span class="dot">•</span>
+        <span>ARSENAL</span>
+        <span class="dot">•</span>
+        <span>REAL MADRID</span>
+      </p>
+      <div class="hero-scroll-cue" id="heroScroll">
+        <span>SCROLL</span>
+        <div class="scroll-line"><div class="scroll-dot"></div></div>
+      </div>
+    </div>
+
+    <!-- Grid de linhas de fundo -->
+    <div class="hero-grid"></div>
+    <!-- Gradiente radial -->
+    <div class="hero-glow"></div>
+  </section>
+
+  <!-- ══════════════════════════════════════ PSG SECTION ═════════════════════════════════════ -->
+  <section id="psg" class="jacket-section psg-section">
+    <div class="section-bg psg-bg"></div>
+    <div class="section-glow psg-glow"></div>
+
+    <div class="jacket-layout">
+      <!-- Coluna de texto -->
+      <div class="jacket-text-col">
+        <span class="club-number" data-text="01">01</span>
+        <h2 class="club-name psg-name">
+          <span class="cn-top">PARIS</span>
+          <span class="cn-bottom">SAINT-GERMAIN</span>
+        </h2>
+        <div class="jacket-specs">
+          <div class="spec-item" data-delay="0"><span class="spec-label">MATERIAL</span><span class="spec-value">Nike Tech Fabric</span></div>
+          <div class="spec-item" data-delay="0.1"><span class="spec-label">PROTEÇÃO</span><span class="spec-value">Water Resistant</span></div>
+          <div class="spec-item" data-delay="0.2"><span class="spec-label">EDIÇÃO</span><span class="spec-value">2025 Season</span></div>
+          <div class="spec-item" data-delay="0.3"><span class="spec-label">CORTE</span><span class="spec-value">Regular Fit</span></div>
+        </div>
+        <a href="#choose" class="jacket-cta psg-cta">
+          <span>EXPLORAR</span>
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <!-- Imagem da jaqueta -->
+      <div class="jacket-img-col" id="psgImgCol">
+        <div class="jacket-card psg-card" id="psgCard">
+          <!-- Placeholder visual PSG -->
+          <div class="jacket-visual psg-visual">
+            <div class="jacket-body psg-body">
+              <div class="jacket-collar"></div>
+              <div class="jacket-zip"></div>
+              <div class="jacket-stripe left"></div>
+              <div class="jacket-stripe right"></div>
+              <div class="jacket-logo-area psg-logo">
+                <div class="club-badge psg-badge">
+                  <div class="badge-inner">PSG</div>
+                </div>
               </div>
-              <div class="crest-on-jacket madrid-crest">RM</div>
-            </div>
-            <div class="jacket-zip"></div>
-            <div class="jacket-sleeve left-sleeve"></div>
-            <div class="jacket-sleeve right-sleeve"></div>
-            <div class="jacket-shine"></div>
-            <div class="jacket-reflection"></div>
-          </div>
-        </div>
-        <div class="product-shadow"></div>
-        <div class="product-light madrid-light"></div>
-        <div class="product-particles-field madrid-particles-field"></div>
-      </div>
-      <div class="product-price-tag">
-        <span class="price-label">FROM</span>
-        <span class="price-amount">€149</span>
-      </div>
-    </div>
-  </div>
-  <div class="section-divider madrid-divider"></div>
-</section>
-
-<!-- PSG -->
-<section id="psg" class="club-section" data-club="psg">
-  <div class="club-ambient psg-ambient"></div>
-  <div class="club-particles" id="psg-particles"></div>
-  <div class="club-layout reverse">
-    <div class="club-info">
-      <div class="club-number">02</div>
-      <div class="club-badge-area">
-        <div class="club-badge psg-badge">
-          <span>PSG</span>
-        </div>
-        <div class="badge-glow psg-glow"></div>
-      </div>
-      <h2 class="club-name" data-split>PARIS<br>SAINT-<br>GERMAIN</h2>
-      <div class="club-tagline">Ici c'est Paris — Neon Edition</div>
-      <p class="club-desc">Dark. Electric. Parisian. The streets of the 19th bleed into elite sport. Navy and neon — a voltage that never cuts out.</p>
-      <div class="product-specs">
-        <div class="spec-item"><span class="spec-label">Material</span><span class="spec-val">Storm-FIT ADV</span></div>
-        <div class="spec-item"><span class="spec-label">Weight</span><span class="spec-val">195g</span></div>
-        <div class="spec-item"><span class="spec-label">Tech</span><span class="spec-val">Reflective Grid</span></div>
-      </div>
-      <button class="club-cta psg-cta">
-        <span>VIEW JACKET</span>
-        <div class="cta-line"></div>
-      </button>
-    </div>
-    <div class="club-product-wrap">
-      <div class="product-stage psg-stage">
-        <div class="jacket-visual psg-jacket" id="psg-jacket">
-          <div class="jacket-body">
-            <div class="jacket-collar psg-collar"></div>
-            <div class="jacket-chest">
-              <div class="club-logo-on-jacket psg-logo-jacket">
-                <svg viewBox="0 0 200 80" fill="none" width="28"><path d="M0 60 Q50 0 200 20 Q120 40 60 55 Z" fill="rgba(255,255,255,0.85)"/></svg>
+              <div class="nike-chest">
+                <svg viewBox="0 0 200 70" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M190 10 L30 60 Q10 67 5 55 Q0 43 20 35 L100 5 Z" fill="white" opacity="0.9"/>
+                </svg>
               </div>
-              <div class="crest-on-jacket psg-crest">PSG</div>
+              <div class="jacket-pocket left-pocket"></div>
+              <div class="jacket-pocket right-pocket"></div>
             </div>
-            <div class="jacket-zip psg-zip"></div>
-            <div class="jacket-sleeve left-sleeve psg-sleeve"></div>
-            <div class="jacket-sleeve right-sleeve psg-sleeve"></div>
-            <div class="jacket-shine psg-shine"></div>
-            <div class="jacket-neon-trim"></div>
           </div>
+          <div class="jacket-reflection"></div>
+          <div class="jacket-glow psg-card-glow"></div>
         </div>
-        <div class="product-shadow psg-shadow"></div>
-        <div class="product-light psg-light"></div>
-        <div class="neon-glow-field"></div>
-      </div>
-      <div class="product-price-tag psg-price">
-        <span class="price-label">FROM</span>
-        <span class="price-amount">€149</span>
       </div>
     </div>
-  </div>
-  <div class="section-divider psg-divider"></div>
-</section>
 
-<!-- BAYERN -->
-<section id="bayern" class="club-section" data-club="bayern">
-  <div class="club-ambient bayern-ambient"></div>
-  <div class="club-particles" id="bayern-particles"></div>
-  <div class="club-layout">
-    <div class="club-info">
-      <div class="club-number">03</div>
-      <div class="club-badge-area">
-        <div class="club-badge bayern-badge">
-          <span>FCB</span>
-        </div>
-        <div class="badge-glow bayern-glow"></div>
+    <!-- Texto de fundo decorativo -->
+    <div class="bg-text psg-bg-text">PSG</div>
+  </section>
+
+  <!-- ══════════════════════════════════════ TRANSIÇÃO 1 ═════════════════════════════════════ -->
+  <section class="transition-section t1">
+    <div class="transition-content">
+      <canvas class="transition-canvas" id="t1Canvas"></canvas>
+      <div class="transition-text-wrap">
+        <p class="transition-overline">Next Chapter</p>
+        <h3 class="transition-big">THE GUNNERS</h3>
       </div>
-      <h2 class="club-name" data-split>FC<br>BAYERN<br>MÜNCHEN</h2>
-      <div class="club-tagline">Mia San Mia — Power Edition</div>
-      <p class="club-desc">Blood red. Matte black. German precision meets Bavarian fury. A jacket that doesn't ask for permission.</p>
-      <div class="product-specs">
-        <div class="spec-item"><span class="spec-label">Material</span><span class="spec-val">NikeShield FZ</span></div>
-        <div class="spec-item"><span class="spec-label">Weight</span><span class="spec-val">210g</span></div>
-        <div class="spec-item"><span class="spec-label">Tech</span><span class="spec-val">Dri-FIT Strike</span></div>
-      </div>
-      <button class="club-cta bayern-cta">
-        <span>VIEW JACKET</span>
-        <div class="cta-line"></div>
-      </button>
     </div>
-    <div class="club-product-wrap">
-      <div class="product-stage bayern-stage">
-        <div class="jacket-visual bayern-jacket" id="bayern-jacket">
-          <div class="jacket-body">
-            <div class="jacket-collar bayern-collar"></div>
-            <div class="jacket-chest">
-              <div class="club-logo-on-jacket">
-                <svg viewBox="0 0 200 80" fill="none" width="28"><path d="M0 60 Q50 0 200 20 Q120 40 60 55 Z" fill="rgba(255,255,255,0.9)"/></svg>
+  </section>
+
+  <!-- ══════════════════════════════════════ ARSENAL SECTION ════════════════════════════════ -->
+  <section id="arsenal" class="jacket-section arsenal-section">
+    <div class="section-bg arsenal-bg"></div>
+    <div class="section-glow arsenal-glow"></div>
+
+    <div class="jacket-layout reverse">
+      <!-- Imagem -->
+      <div class="jacket-img-col" id="arsenalImgCol">
+        <div class="jacket-card arsenal-card" id="arsenalCard">
+          <div class="jacket-visual arsenal-visual">
+            <div class="jacket-body arsenal-body">
+              <div class="jacket-collar collar-red"></div>
+              <div class="jacket-zip zip-gold"></div>
+              <div class="jacket-stripe left stripe-white"></div>
+              <div class="jacket-stripe right stripe-white"></div>
+              <div class="jacket-logo-area arsenal-logo">
+                <div class="club-badge arsenal-badge">
+                  <div class="badge-inner ars-inner">AFC</div>
+                </div>
               </div>
-              <div class="crest-on-jacket bayern-crest">FCB</div>
+              <div class="nike-chest">
+                <svg viewBox="0 0 200 70" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M190 10 L30 60 Q10 67 5 55 Q0 43 20 35 L100 5 Z" fill="white" opacity="0.9"/>
+                </svg>
+              </div>
+              <div class="jacket-pocket left-pocket pocket-dark"></div>
+              <div class="jacket-pocket right-pocket pocket-dark"></div>
+              <div class="arsenal-cannon">
+                <div class="cannon-barrel"></div>
+                <div class="cannon-wheel"></div>
+              </div>
             </div>
-            <div class="jacket-zip bayern-zip"></div>
-            <div class="jacket-sleeve left-sleeve bayern-sleeve"></div>
-            <div class="jacket-sleeve right-sleeve bayern-sleeve"></div>
-            <div class="jacket-shine bayern-shine"></div>
-            <div class="jacket-energy-lines"></div>
           </div>
+          <div class="jacket-reflection"></div>
+          <div class="jacket-glow arsenal-card-glow"></div>
+          <div class="light-sweep" id="arsenalLightSweep"></div>
         </div>
-        <div class="product-shadow bayern-shadow"></div>
-        <div class="product-light bayern-light"></div>
-        <div class="energy-burst-field"></div>
       </div>
-      <div class="product-price-tag bayern-price">
-        <span class="price-label">FROM</span>
-        <span class="price-amount">€149</span>
-      </div>
-    </div>
-  </div>
-  <div class="section-divider"></div>
-</section>
 
-<!-- COMPARISON / FOOTER CTA -->
-<section id="finale">
-  <div class="finale-bg"></div>
-  <div class="finale-content">
-    <p class="finale-eyebrow">THREE KITS. ONE STANDARD.</p>
-    <h2 class="finale-title">Choose<br>Your Club.</h2>
-    <div class="finale-clubs">
-      <div class="finale-club-item" data-club-link="real-madrid">
-        <div class="finale-badge madrid-final-badge">RM</div>
-        <span>Real Madrid</span>
-      </div>
-      <div class="finale-club-item" data-club-link="psg">
-        <div class="finale-badge psg-final-badge">PSG</div>
-        <span>Paris Saint-Germain</span>
-      </div>
-      <div class="finale-club-item" data-club-link="bayern">
-        <div class="finale-badge bayern-final-badge">FCB</div>
-        <span>Bayern München</span>
+      <!-- Texto -->
+      <div class="jacket-text-col">
+        <span class="club-number" data-text="02">02</span>
+        <h2 class="club-name arsenal-name">
+          <span class="cn-top">THE</span>
+          <span class="cn-bottom">ARSENAL</span>
+        </h2>
+        <div class="jacket-specs">
+          <div class="spec-item" data-delay="0"><span class="spec-label">MATERIAL</span><span class="spec-value">Nike Tech Fabric</span></div>
+          <div class="spec-item" data-delay="0.1"><span class="spec-label">PROTEÇÃO</span><span class="spec-value">Water Resistant</span></div>
+          <div class="spec-item" data-delay="0.2"><span class="spec-label">EDIÇÃO</span><span class="spec-value">2025 Season</span></div>
+          <div class="spec-item" data-delay="0.3"><span class="spec-label">LEGADO</span><span class="spec-value">North London</span></div>
+        </div>
+        <a href="#choose" class="jacket-cta arsenal-cta">
+          <span>EXPLORAR</span>
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
       </div>
     </div>
-    <button class="finale-cta">
-      <span>Shop All Jackets</span>
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>
-  </div>
-  <footer class="site-footer">
-    <div class="footer-logo">
-      <svg viewBox="0 0 200 80" fill="none" width="44"><path d="M0 60 Q50 0 200 20 Q120 40 60 55 Z" fill="rgba(255,255,255,0.3)"/></svg>
+
+    <div class="bg-text arsenal-bg-text">GUN</div>
+  </section>
+
+  <!-- ══════════════════════════════════════ TRANSIÇÃO 2 ═════════════════════════════════════ -->
+  <section class="transition-section t2">
+    <div class="transition-content">
+      <canvas class="transition-canvas" id="t2Canvas"></canvas>
+      <div class="transition-text-wrap">
+        <p class="transition-overline">Final Icon</p>
+        <h3 class="transition-big">NEXT ICON</h3>
+      </div>
     </div>
-    <p class="footer-copy">© 2025 Nike, Inc. All Rights Reserved.</p>
-    <p class="footer-legal">Concept site — not an official Nike product.</p>
+  </section>
+
+  <!-- ══════════════════════════════════════ REAL MADRID SECTION ════════════════════════════ -->
+  <section id="realmadrid" class="jacket-section rm-section">
+    <div class="section-bg rm-bg"></div>
+    <div class="section-glow rm-glow"></div>
+
+    <div class="jacket-layout">
+      <!-- Texto -->
+      <div class="jacket-text-col">
+        <span class="club-number rm-number" data-text="03">03</span>
+        <h2 class="club-name rm-name">
+          <span class="cn-top">REAL</span>
+          <span class="cn-bottom">MADRID</span>
+        </h2>
+        <div class="jacket-specs rm-specs">
+          <div class="spec-item" data-delay="0"><span class="spec-label">MATERIAL</span><span class="spec-value">Nike Tech Fabric</span></div>
+          <div class="spec-item" data-delay="0.1"><span class="spec-label">PROTEÇÃO</span><span class="spec-value">Water Resistant</span></div>
+          <div class="spec-item" data-delay="0.2"><span class="spec-label">EDIÇÃO</span><span class="spec-value">2025 Season</span></div>
+          <div class="spec-item" data-delay="0.3"><span class="spec-label">LEGADO</span><span class="spec-value">Hala Madrid</span></div>
+        </div>
+        <a href="#choose" class="jacket-cta rm-cta">
+          <span>EXPLORAR</span>
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <!-- Imagem -->
+      <div class="jacket-img-col rm-img-col" id="rmImgCol">
+        <div class="jacket-card rm-card" id="rmCard">
+          <!-- Efeito glassmorphism + partículas douradas -->
+          <div class="rm-particles" id="rmParticles"></div>
+          <div class="jacket-visual rm-visual">
+            <div class="jacket-body rm-body">
+              <div class="jacket-collar collar-gold"></div>
+              <div class="jacket-zip zip-silver"></div>
+              <div class="jacket-stripe left stripe-gold"></div>
+              <div class="jacket-stripe right stripe-gold"></div>
+              <div class="jacket-logo-area rm-logo">
+                <div class="club-badge rm-badge">
+                  <div class="badge-inner rm-inner">RM</div>
+                </div>
+              </div>
+              <div class="nike-chest">
+                <svg viewBox="0 0 200 70" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M190 10 L30 60 Q10 67 5 55 Q0 43 20 35 L100 5 Z" fill="#c9a227" opacity="0.9"/>
+                </svg>
+              </div>
+              <div class="jacket-pocket left-pocket pocket-light"></div>
+              <div class="jacket-pocket right-pocket pocket-light"></div>
+            </div>
+          </div>
+          <div class="glass-overlay"></div>
+          <div class="jacket-reflection rm-reflection"></div>
+          <div class="jacket-glow rm-card-glow"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-text rm-bg-text">REAL</div>
+  </section>
+
+  <!-- ══════════════════════════════════════ FINAL / CHOOSE SECTION ═════════════════════════ -->
+  <section id="choose" class="choose-section">
+    <div class="choose-bg"></div>
+    <div class="choose-content">
+      <div class="choose-header">
+        <p class="choose-overline">Your Club. Your Identity.</p>
+        <h2 class="choose-title">CHOOSE YOUR<br><span class="choose-accent">CLUB</span></h2>
+      </div>
+
+      <div class="choose-grid">
+        <!-- PSG Card -->
+        <div class="choose-card" id="choosePsg" data-club="psg">
+          <div class="choose-card-bg psg-choose-bg"></div>
+          <div class="choose-jacket-mini">
+            <div class="mini-jacket psg-mini">
+              <div class="mj-body psg-body-mini">
+                <div class="mj-collar"></div>
+                <div class="mj-logo psg-badge-mini">PSG</div>
+                <div class="mj-swoosh">
+                  <svg viewBox="0 0 100 35"><path d="M95 5 L15 30 Q5 33 2 27 Q0 21 10 17 L50 2 Z" fill="white" opacity="0.8"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="choose-card-info">
+            <h3 class="choose-club-name">Paris Saint-Germain</h3>
+            <p class="choose-price">R$ 549,90</p>
+            <div class="choose-card-tag">WATER RESISTANT</div>
+          </div>
+          <div class="choose-card-glow psg-choose-glow"></div>
+          <div class="choose-hover-cta">VER PRODUTO →</div>
+        </div>
+
+        <!-- Arsenal Card -->
+        <div class="choose-card featured" id="chooseArsenal" data-club="arsenal">
+          <div class="choose-card-bg arsenal-choose-bg"></div>
+          <div class="featured-label">MAIS POPULAR</div>
+          <div class="choose-jacket-mini">
+            <div class="mini-jacket arsenal-mini">
+              <div class="mj-body arsenal-body-mini">
+                <div class="mj-collar collar-red-mini"></div>
+                <div class="mj-logo arsenal-badge-mini">AFC</div>
+                <div class="mj-swoosh">
+                  <svg viewBox="0 0 100 35"><path d="M95 5 L15 30 Q5 33 2 27 Q0 21 10 17 L50 2 Z" fill="white" opacity="0.8"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="choose-card-info">
+            <h3 class="choose-club-name">Arsenal FC</h3>
+            <p class="choose-price">R$ 549,90</p>
+            <div class="choose-card-tag">WATER RESISTANT</div>
+          </div>
+          <div class="choose-card-glow arsenal-choose-glow"></div>
+          <div class="choose-hover-cta">VER PRODUTO →</div>
+        </div>
+
+        <!-- Real Madrid Card -->
+        <div class="choose-card" id="chooseRm" data-club="rm">
+          <div class="choose-card-bg rm-choose-bg"></div>
+          <div class="choose-jacket-mini">
+            <div class="mini-jacket rm-mini">
+              <div class="mj-body rm-body-mini">
+                <div class="mj-collar collar-gold-mini"></div>
+                <div class="mj-logo rm-badge-mini">RM</div>
+                <div class="mj-swoosh">
+                  <svg viewBox="0 0 100 35"><path d="M95 5 L15 30 Q5 33 2 27 Q0 21 10 17 L50 2 Z" fill="#c9a227" opacity="0.9"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="choose-card-info">
+            <h3 class="choose-club-name">Real Madrid CF</h3>
+            <p class="choose-price">R$ 549,90</p>
+            <div class="choose-card-tag">WATER RESISTANT</div>
+          </div>
+          <div class="choose-card-glow rm-choose-glow"></div>
+          <div class="choose-hover-cta">VER PRODUTO →</div>
+        </div>
+      </div>
+
+      <div class="shop-cta-wrap">
+        <a href="#" class="shop-btn" id="shopBtn">
+          <span class="shop-btn-text">SHOP NOW</span>
+          <span class="shop-btn-icon">
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+          <div class="shop-btn-glow"></div>
+        </a>
+        <p class="shop-note">Frete grátis em pedidos acima de R$ 299 · Devolução em 30 dias</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ FOOTER ═════════════════════════════════════════ -->
+  <footer id="footer">
+    <div class="footer-inner">
+      <svg class="footer-swoosh" viewBox="0 0 200 70" xmlns="http://www.w3.org/2000/svg">
+        <path d="M190 10 L30 60 Q10 67 5 55 Q0 43 20 35 L100 5 Z" fill="white" opacity="0.15"/>
+      </svg>
+      <p class="footer-copy">© 2025 Nike, Inc. All Rights Reserved. · Windrunner Collection</p>
+      <p class="footer-note">Site criado para fins de demonstração / portfólio.</p>
+    </div>
   </footer>
-</section>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/SplitText.min.js"></script>
-<script src="main.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
