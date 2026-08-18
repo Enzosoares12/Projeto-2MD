@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minecraft Web 3D</title>
+  <style>
+    body { margin: 0; overflow: hidden; font-family: sans-serif; user-select: none; }
+    #crosshair {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      color: white; font-size: 26px; pointer-events: none; z-index: 10;
+    }
+    #ui {
+      position: absolute; top: 10px; left: 10px;
+      color: white; background: rgba(0,0,0,0.6);
+      padding: 12px; border-radius: 8px; pointer-events: none; z-index: 10;
+    }
+  </style>
+</head>
+<body>
+  <div id="crosshair">+</div>
+  <div id="ui">
+    <strong>Controles:</strong><br>
+    Clique na tela para Bloquear o Mouse e Jogar<br>
+    W, A, S, D - Movimentação<br>
+    Espaço - Pular<br>
+    Clique Esquerdo - Quebrar Bloco<br>
+    Clique Direito - Colocar Bloco
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/PointerLockControls.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
+
+  <script>
+    const simplex = new SimplexNoise();
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x87ceeb);
+    scene.fog = new THREE.FogExp2(0x87ceeb, 0.02);
+
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    const light = new THREE.DirectionalLight(0xffffff, 0.9);
+    light.position.set(50, 100, 50);
+    scene.add(light);
+    scene.add(new THREE.AmbientLight(0x777777));
+
+    const controls = new THREE.PointerLockControls(camera, document.body);
+    document.body.addEventListener('click', () => { controls.lock(); });
+
+    let moveForward = false, moveBackward = false, moveLeft = false, moveRight = false, canJump = false;
+    let velocity = new THREE.Vector3();
+    let direction = new THREE.Vector3();
+
+    document.addEventListener('keydown', (e) => {
+      switch (e.code) {
+        case 'KeyW': moveForward = true; break;
+        case 'KeyS': moveBackward = true; break;
+        case 'KeyA': moveLeft = true; break;
+        case 'KeyD': moveRight = true; break;
+        case 'Space': if (canJump) velocity.y += 10; canJump = false; break;
+      }
+    });
+
+    document.addEventListener('keyup', (e) => {
+      switch (e.code) {
+        case 'KeyW': moveForward = false; break;
+        case 'KeyS': moveBackward = false; break;
+        case 'KeyA': moveLeft = false; break;
+        case 'KeyD': moveRight = false; break;
+      }
+    });
+
+    const blockSize = 1;
+    const chunkSize = 16;
+    const loadedChunks = {};
+    const blocks = {};
+
+    const blockGeometry = new THREE.BoxGeometry(blockSize, blockSize, blockSize);
+    const grassMaterials = [
+      new THREE.MeshLambertMaterial({ color: 0x559944 }),
+      new THREE.MeshLambertMaterial({ color: 0x559944 }),
+      new THREE.MeshLambertMaterial({ color: 0x7cfc00 }),
+      new THREE.MeshLambertMaterial({ color: 0x8b5a2b }),
+      new THREE.MeshLambertMaterial({ color: 0x559944 }),
+      new THREE.MeshLambertMaterial({ color: 0x559944 })
+    ];
+
+    function getKey(x, y, z) { return `${x},${y},${z}`; }
+
+    function getTerrainHeight(x, z) {
+      return Math.floor(simplex.noise2D(x * 0.03, z * 0.03) * 6) + 6;
+    }
+
+    function generateChunk(chunkX, chunkZ) {
+      const chunkKey = `${chunkX},${chunkZ}`;
+      if (loadedChunks[chunkKey]) return;
+      loadedChunks[chunkKey] = true;
+
+      const startX = chunkX * chunkSize;
+      const startZ = chunkZ * chunkSize;
+
+      for (let x = startX; x < startX + chunkSize; x++) {
+        for (let z = startZ; z < startZ + chunkSize; z++) {
+          const height = getTerrainHeight(x, z);
+          for (let y = 0; y <= height; y++) {
+            const key = getKey(x, y, z);
+            if (!blocks[key]) {
+              const mesh = new THREE.Mesh(blockGeometry, grassMaterials);
+              mesh.position.set(x, y, z);
+              scene.add(mesh);
+              blocks[key] = mesh;
+            }
+          }
+        }
+      }
+    }
+
+    function updateChunks() {
+      const pX = Math.floor(camera.position.x / chunkSize);
+      const pZ = Math.floor(camera.position.z / chunkSize);
+      const radius = 2;
+
+      for (let x = pX - radius; x <= pX + radius; x++) {
+        for (let z = pZ - radius; z <= pZ + radius; z++) {
+          generateChunk(x, z);
+        }
+      }
+    }
+
+    const raycaster = new THREE.Raycaster();
+    window.addEventListener('mousedown', (e) => {
+      if (!controls.isLocked) return;
+      raycaster.setFromCamera(new THREE.Vector2(0, 0), camera);
+      const intersects = raycaster.intersectObjects(Object.values(blocks));
+
+      if (intersects.length > 0) {
+        const hit = intersects[0];
+        if (e.button === 0) {
+          scene.remove(hit.object);
+          const p = hit.object.position;
+          delete blocks[getKey(p.x, p.y, p.z)];
+        } else if (e.button === 2) {
+          const p = hit.object.position.clone().add(hit.face.normal);
+          const key = getKey(p.x, p.y, p.z);
+          if (!blocks[key]) {
+            const mesh = new THREE.Mesh(blockGeometry, grassMaterials);
+            mesh.position.copy(p);
+            scene.add(mesh);
+            blocks[key] = mesh;
+          }
+        }
+      }
+    });
+
+    window.addEventListener('contextmenu', e => e.preventDefault());
+
+    camera.position.set(0, 20, 0);
+
+    let prevTime = performance.now();
+    function animate() {
+      requestAnimationFrame(animate);
+
+      const time = performance.now();
+      const delta = (time - prevTime) / 1000;
+      prevTime = time;
+
+      if (controls.isLocked) {
+        velocity.x -= velocity.x * 10.0 * delta;
+        velocity.z -= velocity.z * 10.0 * delta;
+        velocity.y -= 25.0 * delta;
+
+        direction.z = Number(moveForward) - Number(moveBackward);
+        direction.x = Number(moveRight) - Number(moveLeft);
+        direction.normalize();
+
+        if (moveForward || moveBackward) velocity.z -= direction.z * 80.0 * delta;
+        if (moveLeft || moveRight) velocity.x -= direction.x * 80.0 * delta;
+
+        controls.moveRight(-velocity.x * delta);
+        controls.moveForward(-velocity.z * delta);
+        camera.position.y += velocity.y * delta;
+
+        if (camera.position.y < 10) {
+          velocity.y = 0;
+          camera.position.y = 10;
+          canJump = true;
+        }
+
+        updateChunks();
+      }
+
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+</body>
+</html>
